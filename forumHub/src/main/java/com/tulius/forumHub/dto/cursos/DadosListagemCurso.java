@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public record DadosListagemCurso(UUID id, String nome, Categoria categoria, Links links) {
     public DadosListagemCurso(Curso curso){
-
+        this(curso.getId(), curso.getNome(), curso.getCategoria(),curso.getLinks());
     }
 }
