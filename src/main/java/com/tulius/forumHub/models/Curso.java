@@ -1,5 +1,7 @@
 package com.tulius.forumHub.models;
 
+import com.tulius.forumHub.dto.cursos.DadosAtualizacaoCurso;
+import com.tulius.forumHub.dto.cursos.DadosCadastroCurso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +10,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity(name= "Cursos")
@@ -25,4 +28,17 @@ public class Curso extends RepresentationModel<Curso> implements Serializable {
     private Categoria categoria;
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topico> topicos;
+
+    public Curso(DadosCadastroCurso dadosCadastroCurso){
+        this.nome = dadosCadastroCurso.nome();
+        this.categoria = Categoria.valueOf(dadosCadastroCurso.categoria());
+    }
+
+    public void atualizarInformacoes(DadosAtualizacaoCurso dadosAtualizacaoCurso) throws IllegalArgumentException{
+        Optional<String> optionalNome = Optional.ofNullable(dadosAtualizacaoCurso.nome());
+        optionalNome.ifPresent(n -> this.nome = n);
+
+        Optional<String> optionalCategoria = Optional.ofNullable(dadosAtualizacaoCurso.categoria());
+        optionalCategoria.ifPresent(c -> this.categoria = Categoria.valueOf(c));
+    }
 }
