@@ -44,7 +44,7 @@ public class Topico extends RepresentationModel<Topico> implements Serializable 
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Resposta> respostas;
 
-    public Topico(UUID id, String titulo,Curso curso) {
+    public Topico(String titulo,String mensagem ,Curso curso) {
         this.id = id;
         this.titulo = titulo;
         this.mensagem = mensagem;
