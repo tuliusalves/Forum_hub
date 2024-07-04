@@ -36,7 +36,7 @@ public class RespostaController {
 
     @Operation(summary = "Liste todas as respostas", description = "Liste todas as respostas")
     @GetMapping
-    public ResponseEntity<Page<DadosListagemResposta>> listarTodasRespostas(@PageableDefault(size = 10, sort = {"dataCriacao"}) Pageable pageable) {
+    public ResponseEntity<Page<DadosListagemResposta>> listarTodasRespostas(@PageableDefault(size = 10, sort = {"dataCriacao"})Pageable pageable) {
         return respostaService.listarTodasRespostas(pageable);
     }
 

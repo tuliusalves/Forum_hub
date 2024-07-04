@@ -82,7 +82,7 @@ public class RespostaService {
         }
 
         Resposta resposta = optionalResposta.get();
-        if(!Usuario.temPermissaoParaModificacao(resposta.getUsuario())){
+        if(!Usuario.temPermisaoParaModificacao(resposta.getUsuario())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DadosErros("Você não pode modificar a resposta de outra pessoa!"));
         }
         resposta.add(linkTo(methodOn(RespostaController.class).listarTodasRespostas(Pageable.unpaged())).withRel("Lista de respostas"));
@@ -98,7 +98,7 @@ public class RespostaService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DadosErros("Resposta não encontrado para a exclusão!"));
         }
         Resposta resposta = optionalResposta.get();
-        if(!Usuario.temPermissaoParaModificacao(resposta.getUsuario())){
+        if(!Usuario.temPermisaoParaModificacao(resposta.getUsuario())){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new DadosErros("Você não tem permissão para excluir a resposta de outra pessoa!"));
         }
 

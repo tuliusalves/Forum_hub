@@ -13,15 +13,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Entity(name= "Cursos")
-@Table(name= "cursos")
+@Entity(name = "Cursos")
+@Table(name = "cursos")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Embeddable
 public class Curso extends RepresentationModel<Curso> implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nome;
     @Enumerated(EnumType.STRING)
@@ -29,7 +29,7 @@ public class Curso extends RepresentationModel<Curso> implements Serializable {
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topico> topicos;
 
-    public Curso(DadosCadastroCurso dadosCadastroCurso){
+    public Curso(DadosCadastroCurso dadosCadastroCurso) {
         this.nome = dadosCadastroCurso.nome();
         this.categoria = Categoria.valueOf(dadosCadastroCurso.categoria());
     }
@@ -40,5 +40,7 @@ public class Curso extends RepresentationModel<Curso> implements Serializable {
 
         Optional<String> optionalCategoria = Optional.ofNullable(dadosAtualizacaoCurso.categoria());
         optionalCategoria.ifPresent(c -> this.categoria = Categoria.valueOf(c));
+
+
     }
 }

@@ -6,5 +6,5 @@ public enum Categoria {
     MOBILE,
     JOGOS,
     CIENCIA_DE_DADOS,
-    INTELIGENCIA_ARTIFICIAL
+    INTELIGENCIA_ARTIFICIAL;
 }

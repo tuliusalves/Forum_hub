@@ -19,16 +19,18 @@ import java.util.List;
 public class Exceptions {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> tratarErro404(){
+
         return ResponseEntity.notFound().build();
     }
-    @ExceptionHandler(EntityNotFoundException.class)
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> tratar400(MethodArgumentNotValidException exception){
         List<FieldError> erros= exception.getFieldErrors();
         return ResponseEntity.badRequest().body(erros.stream().map(DadosErrosAvaliacao::new));
     }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<DadosErroDuplicata>duplicata(SQLFeatureNotSupportedException exception){
+    public ResponseEntity<DadosErroDuplicata>duplicata(SQLIntegrityConstraintViolationException exception){
           return ResponseEntity.status(HttpStatus.CONFLICT).body(new DadosErroDuplicata(exception.getMessage()));
     }
 

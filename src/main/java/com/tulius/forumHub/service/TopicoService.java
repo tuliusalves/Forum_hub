@@ -92,7 +92,7 @@ public class TopicoService {
         Topico topico = optionalTopico.get();
         Usuario usuario = topico.getUsuario();
 
-        if (!Usuario.temPermissaoParaModificacao(usuario)) {
+        if (!Usuario.temPermisaoParaModificacao(usuario)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new DadosErros("Você não tem permissão para modificar tópicos de outra pessoa!"));
         }
 
@@ -110,7 +110,7 @@ public class TopicoService {
         }
 
         Usuario usuario = optionalTopico.get().getUsuario();
-        if (!Usuario.temPermissaoParaModificacao(usuario)) {
+        if (!Usuario.temPermisaoParaModificacao(usuario)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new DadosErros("Você não tem permissão para excluir tópicos de outra pessoa!"));
         }
 
@@ -136,7 +136,7 @@ public class TopicoService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DadosErros("Esta resposta não pertence a esse tópico!"));
         }
 
-        if (!Usuario.temPermissaoParaModificacao(topico.getUsuario())) {
+        if (!Usuario.temPermisaoParaModificacao(topico.getUsuario())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DadosErros("Você não tem permissão de alterar o status do tópico de outra pessoa!"));
         }
         List<Resposta> respostas = respostaRepository.buscarRespostaPorSolucaoPorTopico(true, topico);

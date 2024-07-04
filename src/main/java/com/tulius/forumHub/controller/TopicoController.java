@@ -40,31 +40,30 @@ public class TopicoController {
     public ResponseEntity<Page<DadosListagemTopicos>> listarTodosTopicos(@PageableDefault(size = 10, sort = {"dataCriacao"}) Pageable paginacao) {
         return topicoService.listarTodosTopicos(paginacao);
     }
-
     @Operation(summary = "Liste um tópicos cadastrado", description = "Liste um tópicos cadastrado")
     @GetMapping("/{id}")
-    public ResponseEntity<?> listarTopico(@PathVariable(name = "id") UUID id) {
+    public ResponseEntity<?> listarTopico(@PathVariable(name = "id") UUID id){
         return topicoService.listarTopico(id);
     }
 
     @Operation(summary = "Atualize os dados de um tópicos cadastrado", description = "Atualize os dados de um tópicos cadastrado")
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> atualizarTopico(@RequestBody @Valid DadosAtualizacaoTopico dadosAtualizacaoTopico, @PathVariable(name = "id") UUID id) {
+    public ResponseEntity<?> atualizarTopico(@RequestBody @Valid DadosAtualizacaoTopico dadosAtualizacaoTopico, @PathVariable(name = "id") UUID id){
         return topicoService.atualizarTopico(dadosAtualizacaoTopico, id);
     }
 
     @Operation(summary = "Delete um tópicos cadastrado por você", description = "Delete um tópicos cadastrado por você")
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> excluirTopico(@PathVariable(name = "id") UUID id) {
+    public ResponseEntity<?> excluirTopico(@PathVariable(name = "id") UUID id){
         return topicoService.excluirTopico(id);
     }
 
     @Operation(summary = "Altere os status do tópico para resolvido quando o tópico for resolvido", description = "Informe o id do tópico resolvido e abaixo o id da resposta onde teve a solução")
     @PutMapping("resolvido/{id}")
     @Transactional
-    public ResponseEntity<?> atualizarStatusTopico(@RequestBody @Valid DadosTopicoResolvido dadosTopicoResolvido, @PathVariable(name = "id") UUID id) {
+    public ResponseEntity<?> atualizarStatusTopico(@RequestBody @Valid DadosTopicoResolvido dadosTopicoResolvido, @PathVariable(name = "id") UUID id){
         return topicoService.atualizarStatusTopico(id, dadosTopicoResolvido);
     }
 }

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name= "respostas")
+@Table(name = "respostas")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -28,7 +28,7 @@ public class Resposta extends RepresentationModel<Curso> implements Serializable
     @Column(nullable = false)
     private Boolean solucao;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "autor_id")
     private Usuario usuario;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topico_id")
@@ -42,10 +42,9 @@ public class Resposta extends RepresentationModel<Curso> implements Serializable
         this.dataCriacao = LocalDateTime.now();
     }
 
-    public void atualizarInformacoes(DadosAtualizacaoResposta dadosAtualizacaoResposta){
-        if(dadosAtualizacaoResposta.mensagem() !=null){
+    public void atualizarInformacoes(DadosAtualizacaoResposta dadosAtualizacaoResposta) {
+        if (dadosAtualizacaoResposta.mensagem() != null) {
             this.mensagem = dadosAtualizacaoResposta.mensagem();
         }
     }
-
 }

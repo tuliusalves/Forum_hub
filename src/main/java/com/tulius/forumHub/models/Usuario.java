@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity(name= "Usuario")
+@Entity(name = "Usuario")
 @Table(name = "usuarios")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,46 +29,40 @@ public class Usuario extends RepresentationModel<Curso> implements Serializable,
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     private String nome;
     @Column(unique = true, nullable = false)
     private String email;
     private String senha;
-
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topico> topicos;
-
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Resposta> respostas;
 
-    public Usuario(DadosCadastroUsuario dadosCadastroUsuario){
+    public Usuario(DadosCadastroUsuario dadosCadastroUsuario) {
         this.id = null;
-        this.nome= dadosCadastroUsuario.nome();
-        this.email= dadosCadastroUsuario.email();
-        this.senha= criptografarSenha(dadosCadastroUsuario.senha());
+        this.nome = dadosCadastroUsuario.nome();
+        this.email = dadosCadastroUsuario.email();
+        this.senha = criptografarSenha(dadosCadastroUsuario.senha());
     }
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    public static Usuario getUsuarioLogado(){
+    public static Usuario getUsuarioLogado() {
         return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public static boolean temPermissaoParaModificacao(Usuario usuario){
+    public static boolean temPermisaoParaModificacao(Usuario usuario) {
         return Objects.equals(Usuario.getUsuarioLogado().getId(), usuario.getId());
-    }
-    //
-    public String criptografarSenha(String senha) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return  bCryptPasswordEncoder.encode(senha);
     }
 
     @Override
     public String getPassword() {
         return senha;
     }
+
     @Override
     public String getUsername() {
         return email;
@@ -94,15 +88,20 @@ public class Usuario extends RepresentationModel<Curso> implements Serializable,
         return UserDetails.super.isEnabled();
     }
 
-    public void atualizarInformacoes(DadosAtualizacaoUsuario dadosAtualizacaoUsuario){
-        if(dadosAtualizacaoUsuario.nome() !=null){
+    public void atualizarInformacoes(DadosAtualizacaoUsuario dadosAtualizacaoUsuario) {
+        if (dadosAtualizacaoUsuario.nome() != null) {
             this.nome = dadosAtualizacaoUsuario.nome();
         }
-        if(dadosAtualizacaoUsuario.email() !=null){
-            this.email= dadosAtualizacaoUsuario.email();
+        if (dadosAtualizacaoUsuario.email() != null) {
+            this.email = dadosAtualizacaoUsuario.email();
         }
-        if(dadosAtualizacaoUsuario.senha() !=null){
-            this.senha= dadosAtualizacaoUsuario.senha();
+        if (dadosAtualizacaoUsuario.senha() != null) {
+            this.senha = criptografarSenha(dadosAtualizacaoUsuario.senha());
         }
+    }
+
+    private String criptografarSenha(String senha){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder.encode(senha);
     }
 }

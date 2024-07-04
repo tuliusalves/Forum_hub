@@ -6,7 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
+
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, UUID> {
-    UserDetails findByEmail(String userName);
+    UserDetails findByEmail(String username);
 }
